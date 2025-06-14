@@ -14,22 +14,22 @@ This is a Java-based microservice built with Spring Boot for shortening URLs and
 
 kubectl port-forward svc/urlshortener-dev 3000:3000 -n urlshortener-dev
 
-The service will now be available at http://localhost:8080
+The service will now be available at http://localhost:3000
 
 📩 To create a shortened link, send a POST request:
 
-curl -X POST http://localhost:8080 -H "Content-Type: application/json" -d '{"originalLink":"https://www.example.com/long-url"}'
+curl -X POST http://localhost:3000 -H "Content-Type: application/json" -d '{"originalLink":"https://www.example.com/long-url"}'
 
 Expected response:
 
 {
   "originalLink": "https://www.example.com/long-url",
-  "shortLink": "http://localhost:8080/abc123xyz"
+  "shortLink": "abc123xyz"
 }
 
 🔁 To access the original URL through the shortened one, use:
 
-curl -L http://localhost:8080/abc123xyz
+curl -L http://localhost:3000/abc123xyz
 
 # Notes
 - Links are generated with random UUID strings (10 characters).
