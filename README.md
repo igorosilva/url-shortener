@@ -1,4 +1,4 @@
-🚀 URL Shortener Microservice
+# 🚀 URL Shortener Microservice
 
 This is a Java-based microservice built with Spring Boot for shortening URLs and redirecting users to their original destinations. It also handles link validation and expiration. To run this service locally, you must have Java 17 or newer, Maven or Gradle, a Kubernetes cluster (e.g., Minikube), and a MongoDB instance.
 
