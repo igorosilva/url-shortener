@@ -1,13 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: urlshortener-ingress
+  name: urlshortener-ingress-dev
+  namespace: urlshortener-dev
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
     - host: urlshortener-dev
       http:
         paths:
-          - path: /urlshortener
+          - path: /v1/api/url-shortener
             pathType: Prefix
             backend:
               service:

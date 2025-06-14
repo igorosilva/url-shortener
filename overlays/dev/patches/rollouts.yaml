@@ -17,7 +17,8 @@ spec:
           image: "iosilva/urlshortener:latest"
           imagePullPolicy: Always
           ports:
-            - containerPort: 3000
+            - containerPort: 8887
+              protocol: TCP
           env:
             - name: JAVA_TOOL_OPTIONS
               value: >
