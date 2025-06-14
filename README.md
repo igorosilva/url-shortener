@@ -8,10 +8,7 @@ This is a Java-based microservice built with Spring Boot for shortening URLs and
 # or  
 ./gradlew build
 
-☸️ Deploy the application to your Kubernetes cluster. Make sure the deployment and service YAML files are applied:
-
-kubectl apply -f deployment.yaml  
-kubectl apply -f service.yaml
+# API Usage
 
 🌐 After the pod is running, forward the port so you can access the application locally:
 
