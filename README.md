@@ -31,10 +31,6 @@ Expected response:
 
 curl -L http://localhost:8080/abc123xyz
 
-If the link is valid and not expired, it will redirect to the original URL.
-
-ℹ️ Additional notes: links are generated using UUIDs trimmed to 10 characters. Expired links are automatically invalidated and will not redirect. Logs are printed using SLF4J. The service uses the builder pattern and centralized constants for maintainability. MongoDB must be properly configured and accessible inside your cluster. The Kubernetes service must be named `url-shortener`, or the `port-forward` command should be updated accordingly.
-
 # Notes
 - Links are generated with random UUID strings (10 characters).
 - Expired links will no longer redirect and will return an appropriate error.
