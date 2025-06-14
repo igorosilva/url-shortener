@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: urlshortener
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: urlshortener
+  template:
+    metadata:
+      labels:
+        app: urlshortener
+    spec:
+      containers:
+        - name: urlshortener
+          image: "iosilva/urlshortener:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: >
+                -Duser.timezone=America/Sao_Paulo
+                -XX:MinRAMPercentage=10
+                -XX:MaxRAMPercentage=75
+            - name: SPRING_DATA_MONGODB_URI
+              value: mongodb://admin:admin123456@mongo-mongodb:27017
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2500Mi
+            requests:
+              cpu: 200m
+              memory: 1500Mi
+          envFrom:
+            - configMapRef:
+                name: urlshortener-config
+            - secretRef:
+                name: urlshortener-secret
+  strategy:
+    canary:
+      steps:
+        - setWeight: 50
+        - pause:
+            duration: 10s
+        - setWeight: 100

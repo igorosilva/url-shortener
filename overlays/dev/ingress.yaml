@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: urlshortener-ingress
+spec:
+  rules:
+    - host: urlshortener-dev
+      http:
+        paths:
+          - path: /urlshortener
+            pathType: Prefix
+            backend:
+              service:
+                name: urlshortener-dev
+                port:
+                  number: 3000
