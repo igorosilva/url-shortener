@@ -18,18 +18,17 @@ The service will now be available at http://localhost:3000
 
 📩 To create a shortened link, send a POST request:
 
-curl -X POST http://localhost:3000 -H "Content-Type: application/json" -d '{"originalLink":"https://www.example.com/long-url"}'
+curl -X POST http://localhost:3000/v1/api/urlshortener/short/short -H "Content-Type: application/json" -d '{"originalLink":"https://www.example.com/long-url"}'
 
 Expected response:
 
 {
-  "originalLink": "https://www.example.com/long-url",
-  "shortLink": "abc123xyz"
+"shortenedLink": "http://localhost:3000/v1/api/urlshortener/short/abc123xyz"
 }
 
 🔁 To access the original URL through the shortened one, use:
 
-curl -L http://localhost:3000/abc123xyz
+curl -L http://localhost:3000/v1/api/urlshortener/short/abc123xyz
 
 # Notes
 - Links are generated with random UUID strings (10 characters).
