@@ -6,12 +6,9 @@ data:
   application.properties: |
     application.title=url-shortener
     expanded.project.version=@project.version@
-  
     spring.application.name=url-shortener
-  
     server.port=8887
     server.servlet.context-path=/v1/api/url-shortener
-  
     spring.datasource.driverClassName=org.h2.Driver
     spring.datasource.url=jdbc:h2:mem:testdb
     spring.datasource.username=${DB_USERNAME}
@@ -19,5 +16,4 @@ data:
     spring.sql.init.platform=h2
     spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
     spring.h2.console.enabled=true
-  
     server.error.include-stacktrace=never

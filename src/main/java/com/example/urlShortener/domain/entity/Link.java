@@ -1,20 +1,22 @@
 package com.example.urlShortener.domain.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+import static com.example.urlShortener.Utils.Constants.TB_LINK;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static java.lang.Boolean.TRUE;
 
@@ -23,17 +25,18 @@ import static java.lang.Boolean.TRUE;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "TB_LINK")
+@Table(name = TB_LINK)
 public class Link {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     @Schema(name = "Link encurtado", example = "http://localhost:8080/dte5ab68")
     private String shortLink;
 
-    @NonNull
+    @NotBlank
     @Schema(name = "Link original", example = "https://google.com/")
     private String originalLink;
 
@@ -49,7 +52,7 @@ public class Link {
 
     @PostPersist
     public void initializeLinkMetadata() {
-        if(createdAt != null) {
+        if (createdAt != null) {
             this.expiresAt = createdAt.plusMinutes(30);
         }
 

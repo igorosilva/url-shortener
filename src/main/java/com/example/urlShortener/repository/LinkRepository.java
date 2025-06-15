@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface LinkRepository extends JpaRepository<Link, Long> {
 
     Link save(Link link);
+
     Link findByShortLink(String shortLink);
 
     @Modifying

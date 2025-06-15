@@ -1,7 +1,8 @@
 package com.example.urlShortener.Utils;
 
 public class Constants {
-    public static final String LOCALHOST = "http://localhost:8080/";
+
+    public static final String TB_LINK = "TB_LINK";
 
     public static final String STEP = "step:{}";
     public static final String METHOD = "method:{}";

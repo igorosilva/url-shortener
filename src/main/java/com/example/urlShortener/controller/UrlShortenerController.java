@@ -3,6 +3,8 @@ package com.example.urlShortener.controller;
 import com.example.urlShortener.domain.request.LinkRequest;
 import com.example.urlShortener.domain.response.LinkResponse;
 import com.example.urlShortener.service.EncurtadorService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,17 +23,17 @@ import static com.example.urlShortener.Utils.Util.logBuilder;
 
 @Slf4j
 @RestController
-@RequestMapping
 @RequiredArgsConstructor
+@RequestMapping("/short")
 public class UrlShortenerController {
 
     private final EncurtadorService service;
 
     @PostMapping
-    public LinkResponse createShortenedLink(@RequestBody LinkRequest linkRequest) {
+    public LinkResponse createShortenedLink(@RequestBody @Valid LinkRequest linkRequest, HttpServletRequest httpServletRequest) {
         log.info(logBuilder(METHOD, STEP), "createShortenedLink", STEP_START);
 
-        LinkResponse response = service.createShortenedLink(linkRequest);
+        LinkResponse response = service.createShortenedLink(linkRequest, httpServletRequest);
 
         log.info(logBuilder(METHOD, STEP), "createShortenedLink", STEP_END);
 

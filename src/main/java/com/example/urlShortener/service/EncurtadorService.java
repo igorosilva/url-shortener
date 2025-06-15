@@ -5,6 +5,7 @@ import com.example.urlShortener.domain.request.LinkRequest;
 import com.example.urlShortener.domain.response.LinkResponse;
 import com.example.urlShortener.exceptions.ShortenerException;
 import com.example.urlShortener.repository.LinkRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import static com.example.urlShortener.Utils.Constants.LINK_DOESNT_EXISTS;
 import static com.example.urlShortener.Utils.Constants.LINK_EXPIRED;
 import static com.example.urlShortener.Utils.Constants.LINK_INVALID;
-import static com.example.urlShortener.Utils.Constants.LOCALHOST;
 import static com.example.urlShortener.domain.builder.LinkBuilder.createLink;
 import static com.example.urlShortener.domain.builder.LinkResponseBuilder.createLinkResponse;
 import static java.time.LocalDateTime.now;
@@ -28,7 +28,7 @@ public class EncurtadorService {
 
     private final LinkRepository linkRepository;
 
-    public LinkResponse createShortenedLink(LinkRequest linkRequest) {
+    public LinkResponse createShortenedLink(LinkRequest linkRequest, HttpServletRequest httpServletRequest) {
         if (linkRequest.getOriginalLink().isEmpty()) {
             log.info(LINK_INVALID);
             return null;
@@ -47,21 +47,18 @@ public class EncurtadorService {
 
         linkRepository.save(link);
 
-        return createLinkResponse(link);
+        String baseUrl = httpServletRequest.getRequestURL().toString();
+        String finalUri = baseUrl + "/" + shortenedLink;
+
+        return createLinkResponse(finalUri);
     }
 
     private static String generateShortenedLink() {
-        String shortenedLink = randomUUID().toString().replace("-", "").substring(0, 10);
-        return getFinalUrl(shortenedLink);
-    }
-
-    private static String getFinalUrl(String shortenedLink) {
-        return LOCALHOST + shortenedLink;
+        return randomUUID().toString().replace("-", "").substring(0, 10);
     }
 
     public String redirectByShortenedLink(String shortenedLink) {
-        String finalUrl = getFinalUrl(shortenedLink);
-        Link link = linkRepository.findByShortLink(finalUrl);
+        Link link = linkRepository.findByShortLink(shortenedLink);
 
         String message;
         if (link == null) {

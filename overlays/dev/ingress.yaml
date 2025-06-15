@@ -12,7 +12,7 @@ spec:
     - host: urlshortener-dev
       http:
         paths:
-          - path: /v1/api/url-shortener
+          - path: /v1/api/urlshortener
             pathType: Prefix
             backend:
               service:
